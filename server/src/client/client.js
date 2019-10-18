@@ -1,14 +1,26 @@
+import "babel-polyfill";
 import React from "react";
 import ReactDOM from "react-dom";
-import { Router } from "react-router-dom";
-import { createBrowserHistory } from "history";
-import Routes from "./Routes";
+import { BrowserRouter } from "react-router-dom";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { Provider } from "react-redux";
+import { renderRoutes } from "react-router-config";
 
-const history = createBrowserHistory();
+import Routes from "./Routes";
+import reducers from "./reducers";
+
+const store = createStore(
+  reducers,
+  window.INITIAL_STATE,
+  applyMiddleware(thunk)
+);
 
 ReactDOM.hydrate(
-  <Router history={history}>
-    <Routes />
-  </Router>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <div>{renderRoutes(Routes)}</div>
+    </BrowserRouter>
+  </Provider>,
   document.getElementById("root")
 );
