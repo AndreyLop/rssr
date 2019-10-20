@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+
+import requireAuth from "../components/HOC/requireAuth";
 import { fetchAdmins } from "../actions";
 
 class AdminsListPage extends Component {
@@ -39,5 +41,5 @@ export default {
   component: connect(
     mapStateToProps,
     mapDispatchStateToProps
-  )(AdminsListPage)
+  )(requireAuth(AdminsListPage))
 };
