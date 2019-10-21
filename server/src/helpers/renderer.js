@@ -7,6 +7,10 @@ import serialize from "serialize-javascript";
 import Routes from "../client/Routes";
 import { Helmet } from "react-helmet";
 
+/*StaticRouter A <Router> that never changes location.
+This can be useful in server-side rendering scenarios when the user isn't actually clicking around, so the location never actually changes. 
+Hence, the name: static. It's also useful in simple tests when you just need to plug in a location and make assertions on the render output.*/
+
 export default (req, store, context) => {
   const content = renderToString(
     <Provider store={store}>
@@ -16,6 +20,7 @@ export default (req, store, context) => {
     </Provider>
   );
 
+  // A SEO optimization done for open graph (meta og) tags
   const helmet = Helmet.renderStatic();
 
   return `
